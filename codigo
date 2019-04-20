@@ -1,0 +1,208 @@
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <math.h>
+
+using namespace std;
+
+int checkMagicArray(int array[8][8])
+{
+int numMagico = 0;
+
+for (int j=0; j<8; j++) 
+{
+numMagico += array[0][j];
+}
+
+int D1sum = 0;
+int D2sum = 0;
+
+for (int i=0; i<8 ; i++)
+{
+    int sumafila = 0;
+    int sumacol = 0;
+    for (int j=0 ; j<8 ; j++)
+    {
+        sumafila += array[i][j];
+        sumacol += array[j][i];
+    }
+    
+    if (sumafila!=numMagico || sumacol!=numMagico)
+    {  
+        return 0;
+    }
+    
+    D1sum += array[i][i];
+    D2sum += array[7-i][7-1];
+}
+
+if (D1sum!=numMagico || D2sum!=numMagico)
+{
+    return 0;
+}
+
+   return numMagico;  
+}
+
+struct Calendario{
+  unsigned short int dia:5; //5 bits de una variable unsigned short
+  unsigned short int mes:4; //4 bits de una variable unsigned short
+  unsigned short int anio:7; //7 bits de una variable unsigned short
+};
+
+//bool chdateeckDate(true);
+int checkDate(Calendario prueba)
+{
+
+  int anio;
+  
+        anio = prueba.anio + 2000;
+        
+
+        if(anio > 1999 && anio < 2128)
+        {
+          if ( prueba.mes >0 && prueba.mes < 13)
+          {
+            if ( prueba.mes == 4 || prueba.mes == 6 || prueba.mes == 9 || prueba.mes == 11)
+            {
+              if (prueba.dia > 0 && prueba.dia < 32)
+              {
+          return 1;
+              }
+              else 
+              {
+               return 0;
+              }
+            }
+            else if (prueba.mes == 1 || prueba.mes ==3 || prueba.mes == 5 || prueba.mes == 7 || prueba.mes == 8 || prueba.mes == 10  )
+
+            {
+              if (prueba.dia > 0 && prueba.dia < 31)
+              {
+                  return 1;
+              }
+              else
+              {
+                  return 0;
+              }
+            }
+
+            else 
+            {
+              if ( anio % 4 == 0 && anio % 100 != 0 || anio % 400 == 0)
+              {
+                if ( prueba.dia > 0 && prueba.dia < 30)
+                {
+                  return 1;
+                }
+              }
+  
+              
+              return 0;
+            }
+
+            
+          }
+          else 
+          {
+            return 0;
+          }
+        }
+        else 
+        {
+          return 0;
+        }
+
+       return 0;
+}
+
+int printHelloMsg(string msg="hola", int num2=1)
+{
+  if (num2 > 0)
+  {
+  for (int i=0 ; i<num2 ; i++)
+  {
+  std::cout << " " << msg << "\n" ;
+  }
+  }
+ else if (num2<0)
+ {
+	 cout<<"no es permitido numeros negativos"<<endl;	
+ }
+ 	else 
+ 	{
+	 
+     std::cout << " " << msg ;
+    }
+}
+
+int serieCuadrados(int  calculo)
+{
+
+    if(calculo == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return pow(calculo,2)+serieCuadrados(calculo-1);
+    }
+}
+
+int main()
+
+{
+    
+    int magic_square[8][8] = {{64,2,3,61,60,6,7,57},{9,55,54,12,13,51,50,16},{17,47,46,20,21,43,42,24},{40,26,27,37,36,30,31,33},{32,34,35,29,28,38,39,25},{41,23,22,44,45,19,18,48},{49,15,14,52,53,11,10,56},{8,58,59,5,4,62,63,1}};
+    
+    
+    /*NO DEBE MODIFICAR NADA EN EL CODIGO DE LA FUNCION MAIN */
+	/*CUALQUIER MODIFICACION SERA PENALIZADA EN LA NOTA */
+	
+	if(checkMagicArray(magic_square))
+		cout<<"El arreglo es un cuadrado magico"<<endl;
+	else
+		cout<<"Ese arreglo NO es un cuadrado magico"<<endl;
+	
+
+    Calendario miCalendario;
+	miCalendario.dia = 29;
+	miCalendario.mes = 2;
+	miCalendario.anio = 28;
+	
+	if(checkDate(miCalendario))
+		cout<<"La fecha fue ingresada correctamente"<<endl;
+	else
+		cout<<"La fecha no es correcta, debes revisarla"<<endl;
+	
+	miCalendario.dia = 31;
+	miCalendario.mes = 11;
+	miCalendario.anio = 19;
+	
+	if(checkDate(miCalendario))
+		cout<<"La fecha fue ingresada correctamente"<<endl;
+	else
+		cout<<"La fecha no es correcta, debes revisarla"<<endl;
+	
+	miCalendario.dia = 7;
+	miCalendario.mes = 10;
+	miCalendario.anio = 25;
+	
+	if(checkDate(miCalendario))
+		cout<<"La fecha fue ingresada correctamente"<<endl;
+	else
+		cout<<"La fecha no es correcta, debes revisarla"<<endl;
+		
+		string msg = "¡Que comience la fiesta!";
+	printHelloMsg();
+	printHelloMsg(msg);
+	printHelloMsg(msg, 4);
+	
+	if(serieCuadrados(50) == 42925)
+		cout<<"Bien calculada la serie de cuadrados :-)"<<endl;
+	else
+		cout<<"Mal calculada la serie de cuadrados, vuelve a intentar :-("<<endl;
+	
+	return 0;
+    
+}
